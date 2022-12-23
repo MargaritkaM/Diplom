@@ -1,13 +1,12 @@
 version: '3.7'
 services:
-  mysql:
-    image: mysql:8.0
+  postgresql:
+    image: postgres:latest
     ports:
       - '3306:3306'
     volumes:
-      - ./data:/var/lib/mysql
+      - ./data:/var/lib/postgres
     environment:
-      - MYSQL_RANDOM_ROOT_PASSWORD=yes
-      - MYSQL_DATABASE=app
-      - MYSQL_USER=margo
-      - MYSQL_PASSWORD=queenMargo
+      - POSTGRES_DB=app
+      - POSTGRES_USER=margo
+      - POSTGRES_PASSWORD=queenMargo

@@ -32,4 +32,52 @@ public class BuyTest {
         PaymentPage.successfulWay();
         assertEquals(SqlHelper.getStatus(), "APPROVED");
     }
+    @Test
+    public void buyBadPathDeclined() {
+        PaymentPage.payToButton();
+        var cardInfo = DataHelper.getDeclinedUser();
+        PaymentPage.buy(cardInfo);
+        PaymentPage.unSuccessfulWay();
+        assertEquals(SqlHelper.getStatus(), "DECLINED");
+    }
+    @Test
+    public void creditHappyPathApproved() {
+        PaymentPage.payInCreditToButton();
+        var cardInfo = DataHelper.getApprovedUser();
+        PaymentPage.buyCredit(cardInfo);
+        PaymentPage.successfulWay();
+        assertEquals(SqlHelper.getStatus(), "APPROVED");
+    }
+    @Test
+    public void creditBadPathDeclined() {
+        PaymentPage.payInCreditToButton();
+        var cardInfo = DataHelper.getDeclinedUser();
+        PaymentPage.buyCredit(cardInfo);
+        PaymentPage.successfulWay();
+        assertEquals(SqlHelper.getStatus(), "DECLINED");
+    }
+
+    @Test
+    public void buyEmptyUser() {
+        PaymentPage.payToButton();
+        var cardInfo = DataHelper.getEmptyUser();
+        PaymentPage.buy(cardInfo);
+        PaymentPage.cardNumberError();
+        PaymentPage.monthError();
+        PaymentPage.yearError();
+        PaymentPage.ownerError();
+        PaymentPage.cvcError();
+    }
+    @Test
+    public void CreditEmptyUser() {
+        PaymentPage.payInCreditToButton();
+        var cardInfo = DataHelper.getEmptyUser();
+        PaymentPage.buyCredit(cardInfo);
+        PaymentPage.cardNumberError();
+        PaymentPage.monthError();
+        PaymentPage.yearError();
+        PaymentPage.ownerError();
+        PaymentPage.cvcError();
+    }
 }
+

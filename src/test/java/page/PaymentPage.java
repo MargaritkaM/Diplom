@@ -47,6 +47,15 @@ public class PaymentPage {
         cvv.setValue(info.getCodeCvc());
         continueButton.click();
     }
+    public static void buyCredit(DataHelper.AuthInfo info) {
+        buttonBuyCredit.click();
+        numberOfCard.setValue(info.getCardNumber());
+        month.setValue(info.getMonth());
+        year.setValue(info.getYear());
+        owner.setValue(info.getOwner());
+        cvv.setValue(info.getCodeCvc());
+        continueButton.click();
+    }
     public void cleanStrings() {
         numberOfCard.doubleClick().sendKeys(Keys.DELETE);
         month.doubleClick().sendKeys(Keys.DELETE);

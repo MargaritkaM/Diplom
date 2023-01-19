@@ -26,7 +26,7 @@ public class SqlHelper {
    @SneakyThrows
     public static String getStatus(){
         setup();
-        String code = "SELECT status FROM payment_entity;";
+        String code = "SELECT status FROM public.payment_entity;";
         return queryRunner.query(connection, code, new ScalarHandler<>());
     }
 

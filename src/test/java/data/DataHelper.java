@@ -15,9 +15,11 @@ public class DataHelper {
         return new AuthInfo("4444444444444441", "06","25","Musatova Margarita","123");
     }
     public static AuthInfo getDeclinedUser() {
-        return new AuthInfo("4444444444444442", "6","25","Musatova Margarita","123");
+        return new AuthInfo("4444444444444442", "06","25","Musatova Margarita","123");
     }
-
+    public static AuthInfo getEmptyUser() {
+        return new AuthInfo("", "","","","");
+    }
 
     @Value
     public static class AuthInfo{

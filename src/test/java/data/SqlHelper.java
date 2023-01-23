@@ -21,7 +21,7 @@ public class SqlHelper {
     public static void setup() {
         queryRunner = new QueryRunner();
         connection = DriverManager
-                .getConnection("jdbc:postgresql://89.223.70.43:5432/app", "margo", "queenMargo");
+                .getConnection("jdbc:postgresql://89.223.70.43:5432/app", "user", "pass");
 
     }
     @SneakyThrows

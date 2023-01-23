@@ -10,8 +10,9 @@ services:
     ports:
       - '5432:5432'
   node-app:
-    build: gate-simulator
-    image: node-app:1.0
+    build: ./artifacts/gate-simulator
+    image: latest
+    container_name: node
     ports:
       - '9999:9999'
 

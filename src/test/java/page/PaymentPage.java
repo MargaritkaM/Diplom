@@ -9,6 +9,7 @@ import org.openqa.selenium.Keys;
 import java.nio.file.Files;
 import java.time.Duration;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -28,11 +29,11 @@ public class PaymentPage {
 
     private static SelenideElement emptyMonth = $(byText("Неверный формат"));
 
-    private SelenideElement emptyYear = $(byText("Неверный формат"));
+    private static SelenideElement emptyYear = $(byText("Неверный формат"));
 
-    private SelenideElement emptyOwner = $(byText("Поле обязательно для заполнения"));
+    private static SelenideElement emptyOwner = $(byText("Поле обязательно для заполнения"));
 
-    private SelenideElement emptyCVC = $(byText("Неверный формат"));
+    private static SelenideElement emptyCVC = $(byText("Неверный формат"));
 
     private static SelenideElement sucMes = $(byText("Операция одобрена Банком."));
     private static SelenideElement errMes = $(byText("Ошибка! Банк отказал в проведении операции."));
@@ -56,10 +57,12 @@ public class PaymentPage {
         cvv.setValue(info.getCodeCvc());
         continueButton.click();
     }
-    public void cleanStrings() {
+    public static void cleanStrings() {
         numberOfCard.doubleClick().sendKeys(Keys.DELETE);
         month.doubleClick().sendKeys(Keys.DELETE);
         year.doubleClick().sendKeys(Keys.DELETE);
+        owner.doubleClick().sendKeys(Keys.DELETE);
+        owner.doubleClick().sendKeys(Keys.DELETE);
         owner.doubleClick().sendKeys(Keys.DELETE);
         cvv.doubleClick().sendKeys(Keys.DELETE);
     }
@@ -74,30 +77,33 @@ public class PaymentPage {
     }
 
     public static void successfulWay() {
-        sucMes.shouldBe(Condition.visible, Duration.ofSeconds(30));
+        sucMes.shouldBe(visible, Duration.ofSeconds(30));
     }
 
     public static void unSuccessfulWay() {
-        errMes.shouldBe(Condition.visible, Duration.ofSeconds(20));
+        errMes.shouldBe(visible, Duration.ofSeconds(20));
     }
 
     public static void cardNumberError() {
-        numberOfCard.shouldBe(Condition.visible);
+        emptyCardNumber.shouldBe(visible);
     }
 
     public static void monthError() {
-        month.shouldBe(Condition.visible);
+        emptyMonth.shouldBe(visible);
     }
 
     public static void yearError() {
-        year.shouldBe(Condition.visible);
+        emptyYear.shouldBe(visible);
     }
 
     public static void ownerError() {
-        owner.shouldBe(Condition.visible);
+        emptyOwner.shouldBe(visible);
     }
 
     public static void cvcError() {
-        cvv.shouldBe(Condition.visible);
+        emptyCVC.shouldBe(visible);
+    }
+    public static void checkValueCardNumber(String expected){
+        numberOfCard.shouldHave(Condition.attribute("value", expected)).shouldBe(visible);
     }
 }

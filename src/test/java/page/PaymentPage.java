@@ -74,7 +74,7 @@ public class PaymentPage {
     }
 
     public static void successfulWay() {
-        sucMes.shouldBe(Condition.visible, Duration.ofSeconds(20));
+        sucMes.shouldBe(Condition.visible, Duration.ofSeconds(30));
     }
 
     public static void unSuccessfulWay() {

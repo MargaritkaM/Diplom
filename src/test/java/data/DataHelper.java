@@ -20,6 +20,9 @@ public class DataHelper {
     public static AuthInfo getEmptyUser() {
         return new AuthInfo("", "","","","");
     }
+    public static AuthInfo getAnotherCardNumber() {
+        return new AuthInfo("1111222233334444", "06","25","Musatova Margarita","123");
+    }
 
     @Value
     public static class AuthInfo{

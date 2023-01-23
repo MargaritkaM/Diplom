@@ -1,34 +1,46 @@
-Задача
-Ваша ключевая задача — автоматизировать позитивные и негативные сценарии покупки тура.
+# Файлы и директории:
 
-Задача разбита на 4 этапа:
+- Файлы docker-compose-posgreSQL.yml, application.properties находятся в корне проекта
+- Jar файл и gate-simulator находятся в папке artifacts
+- Код тестов находится в папке src/test/java/ru/netology
 
-- Планирование автоматизации тестирования.
-- Непосредственно сама автоматизация.
-- Подготовка отчётных документов по итогам автоматизированного тестирования.
-- Подготовка отчётных документов по итогам автоматизации.
+# Описание шагов запуска теста, приводящий к ошибке:
 
-Все материалы — документы, авто-тесты, открытые issue, отчёты и другие — должны быть размещены в одном публичном репозитории. Ссылку на него вы будете отправлять дипломному руководителю.
+1. Склонировать [проект](https://github.com/MargaritkaM/Diplom.git)
 
-Планирование
+2. В application.properties прописано:
 
-В течение трёх дней с начала работы над дипломом вы должны отправить дипломному руководителю личным сообщением в Discord план автоматизации, в котором описаны:
+>spring.credit-gate.url=http://89.223.70.43:9999/credit
+>
+>spring.payment-gate.url=http://89.223.70.43:9999/payment
+>
+>spring.datasource.url=jdbc:postgresql://89.223.70.43:5432/app
+>
+>spring.datasource.username=margo
+>
+>spring.datasource.password=queenMargo
 
-- перечень автоматизируемых сценариев;
-- перечень используемых инструментов с обоснованием выбора;
-- перечень и описание возможных рисков при автоматизации;
-- интервальная оценка с учётом рисков в часах;
-- план сдачи работ: когда будут готовы автотесты, результаты их прогона;
-- отчёт по автоматизации: оформляется в виде файла с именем Plan.md и заливается в репозиторий вашего проекта.
+3. Склонировать проект на удаленную машину для запуска контейнера
 
-Автоматизация
-На этом этапе вы пишете автотесты и прогоняете их. Требований по подключению CI нет, но есть требования к тестам. Обязательно должны быть:
+4. Поднять контейнеры postgresql, Node.js в корне проекта склонированного проекта на удаленной машине:
 
-UI-тесты;
-репорты — Gradle, Allure, Report Portal;
-запросы в базу, проверяющие корректность внесения информации приложением.
-Код автотестов загружается в репозиторий вашего проекта вместе с отчётными документами, файлами и конфигурациями, необходимыми для запуска.
+>docker-compose up
 
-В файле README.md должна быть описана процедура запуска автотестов. Если для запуска нужно заранее установить, настроить, запустить какое-то ПО, то это тоже должно быть описано.
+5. Запустить jar файл через команду в терминале IDEA:
 
-Важно: если после git clone и выполнения шагов, описанных в README.md, авто-тесты не запускаются, то диплом отправляется на доработку.
+>java "-Dspring.datasource.url=jdbc:postgresql://89.223.70.43:5432/app" -jar artifacts/aqa-shop.jar
+
+6. Запустить первый автотест "buyHappyPathApproved" используя зеленый треугольник в IDEA либо через команду в терминале:
+
+>gradlew clean test -Ddb.url=jdbc:postgresql://89.223.70.43:5432/app -Dapp.url=http://localhost:8080
+
+7. Появилась ошибка:
+
+>The authentication type 10 is not supported. Check that you have configured the pg_hba.conf file to include the client's IP address or subnet, and that it is using an authentication scheme supported by the driver.
+org.postgresql.util.PSQLException: The authentication type 10 is not supported. Check that you have configured the pg_hba.conf file to include the client's IP address or subnet, and that it is using an authentication scheme supported by the driver.
+
+8. Отчет об ошибке можно посмотреть build/reports/tests/test/classes/test.BuyTest.html
+
+9. Остановить контейнеры через команду в терминале:
+
+>docker-compose down

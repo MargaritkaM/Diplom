@@ -6,7 +6,6 @@ import com.codeborne.selenide.SelenideElement;
 import data.DataHelper;
 import org.openqa.selenium.Keys;
 
-import java.nio.file.Files;
 import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.visible;
@@ -29,9 +28,14 @@ public class PaymentPage {
 
     private static SelenideElement emptyMonth = $(byText("Неверный формат"));
 
+    private static SelenideElement emptyMonth2 = $(byText("Неверно указан срок действия карты"));
+
     private static SelenideElement emptyYear = $(byText("Неверный формат"));
+    private static SelenideElement emptyYear2 = $(byText("Истёк срок действия карты"));
+    private static SelenideElement emptyYear3 = $(byText("Неверно указан срок действия карты"));
 
     private static SelenideElement emptyOwner = $(byText("Поле обязательно для заполнения"));
+    private static SelenideElement emptyOwner2 = $(byText("Неверно указан владелец карты"));
 
     private static SelenideElement emptyCVC = $(byText("Неверный формат"));
 
@@ -57,7 +61,32 @@ public class PaymentPage {
         cvv.setValue(info.getCodeCvc());
         continueButton.click();
     }
-    public static void cleanStrings() {
+    public static void cleanStrings(DataHelper.AuthInfo info) {
+        buttonBuy.click();
+        numberOfCard.setValue(info.getCardNumber());
+        month.setValue(info.getMonth());
+        year.setValue(info.getYear());
+        owner.setValue(info.getOwner());
+        cvv.setValue(info.getCodeCvc());
+        numberOfCard.doubleClick().sendKeys(Keys.DELETE);
+        numberOfCard.doubleClick().sendKeys(Keys.DELETE);
+        numberOfCard.doubleClick().sendKeys(Keys.DELETE);
+        numberOfCard.doubleClick().sendKeys(Keys.DELETE);
+        month.doubleClick().sendKeys(Keys.DELETE);
+        year.doubleClick().sendKeys(Keys.DELETE);
+        owner.doubleClick().sendKeys(Keys.DELETE);
+        owner.doubleClick().sendKeys(Keys.DELETE);
+        owner.doubleClick().sendKeys(Keys.DELETE);
+        cvv.doubleClick().sendKeys(Keys.DELETE);
+        buttonBuyCredit.click();
+        numberOfCard.setValue(info.getCardNumber());
+        month.setValue(info.getMonth());
+        year.setValue(info.getYear());
+        owner.setValue(info.getOwner());
+        cvv.setValue(info.getCodeCvc());
+        numberOfCard.doubleClick().sendKeys(Keys.DELETE);
+        numberOfCard.doubleClick().sendKeys(Keys.DELETE);
+        numberOfCard.doubleClick().sendKeys(Keys.DELETE);
         numberOfCard.doubleClick().sendKeys(Keys.DELETE);
         month.doubleClick().sendKeys(Keys.DELETE);
         year.doubleClick().sendKeys(Keys.DELETE);
@@ -67,13 +96,12 @@ public class PaymentPage {
         cvv.doubleClick().sendKeys(Keys.DELETE);
     }
 
-
     public static void payToButton() {
         buttonBuy.click();
     }
 
     public static void payInCreditToButton() {
-       buttonBuyCredit.click();
+        buttonBuyCredit.click();
     }
 
     public static void successfulWay() {
@@ -91,13 +119,25 @@ public class PaymentPage {
     public static void monthError() {
         emptyMonth.shouldBe(visible);
     }
+    public static void monthError2() {
+        emptyMonth2.shouldBe(visible);
+    }
 
     public static void yearError() {
         emptyYear.shouldBe(visible);
     }
+    public static void yearError2() {
+        emptyYear2.shouldBe(visible);
+    }
+    public static void yearError3() {
+        emptyYear3.shouldBe(visible);
+    }
 
     public static void ownerError() {
         emptyOwner.shouldBe(visible);
+    }
+    public static void ownerError2() {
+        emptyOwner2.shouldBe(visible);
     }
 
     public static void cvcError() {
@@ -105,5 +145,14 @@ public class PaymentPage {
     }
     public static void checkValueCardNumber(String expected){
         numberOfCard.shouldHave(Condition.attribute("value", expected)).shouldBe(visible);
+    }
+    public static void checkValueMonth(String expected){
+        month.shouldHave(Condition.attribute("value", expected)).shouldBe(visible);
+    }
+    public static void checkValueYear(String expected){
+        year.shouldHave(Condition.attribute("value", expected)).shouldBe(visible);
+    }
+    public static void checkValueCvv(String expected){
+        cvv.shouldHave(Condition.attribute("value", expected)).shouldBe(visible);
     }
 }

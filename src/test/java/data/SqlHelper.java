@@ -30,7 +30,12 @@ public class SqlHelper {
         String code = "SELECT status FROM public.payment_entity;";
         return queryRunner.query(connection, code, new ScalarHandler<>());
     }
-
+    @SneakyThrows
+    public static String getStatusCredit() {
+        setup();
+        String code = "SELECT status FROM public.credit_request_entity;";
+        return queryRunner.query(connection, code, new ScalarHandler<>());
+    }
     @SneakyThrows
    public static void cleanAll(){
         setup();

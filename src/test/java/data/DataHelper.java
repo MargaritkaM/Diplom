@@ -3,6 +3,8 @@ package data;
 import com.github.javafaker.Faker;
 import lombok.Value;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class DataHelper {
@@ -45,6 +47,20 @@ public class DataHelper {
     }
     public static AuthInfo getSeventeenDigitCardNumber() {
         return new AuthInfo("1234 5678 9123 4345 1", "06","25","Musatova Margarita",CVC());
+    }
+    public static AuthInfo getThreeDigitsMonth() {
+        return new AuthInfo("4444444444444441", "123","25","Musatova",CVC());
+    }
+    public static AuthInfo getThreeDigitsYear() {
+        return new AuthInfo("4444444444444441", "12","256","Musatova",CVC());
+    }
+
+    public static AuthInfo getFourDigitsCvv(){
+                return new AuthInfo("4444444444444441", "12","25","Musatova Margarita","1234");
+}
+
+    public static String generateMonthYear(int months, String pattern) {
+        return LocalDate.now().minusMonths(1).format(DateTimeFormatter.ofPattern(pattern));
     }
 
     @Value

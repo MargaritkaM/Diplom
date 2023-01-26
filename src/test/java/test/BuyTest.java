@@ -492,5 +492,19 @@ public class BuyTest {
         PaymentPage.buyCredit(cardInfo);
         PaymentPage.checkValueCvv("123");
     }
+    @ParameterizedTest
+    @CsvSource({
+            "000"
+    })
+    void buyCorCvcPaymentCreditGate(String cvc) {
+        var paymentPage = new PaymentPage();
+        var approvedCard = DataHelper.getApprovedUser();
+        var newCard = new DataHelper.AuthInfo(approvedCard.getCardNumber(),
+                approvedCard.getMonth(), approvedCard.getYear(), approvedCard.getOwner(), cvc);
+        paymentPage.buy(newCard);
+        paymentPage.successfulWay();
+        paymentPage.buyCredit(newCard);
+        paymentPage.successfulWay();
+    }
 }
 

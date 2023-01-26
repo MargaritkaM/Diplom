@@ -1,11 +1,11 @@
 package test;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import data.DataHelper;
 import data.SqlHelper;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import page.PaymentPage;
@@ -15,6 +15,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BuyTest {
 
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
+    }
+
     @BeforeEach
     void setup() {
         Configuration.holdBrowserOpen = true;
@@ -22,7 +31,7 @@ public class BuyTest {
     }
     @AfterEach
     void cleanAll() {
-       SqlHelper.cleanAll();
+        SqlHelper.cleanAll();
     }
     @Test
     public void buyApprovedPaymentGate() {

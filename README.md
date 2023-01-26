@@ -16,58 +16,27 @@
 
 1. Склонировать [проект](https://github.com/MargaritkaM/Diplom.git)
 
-2. В application.properties прописано:
+2. Параметры [application.properties](https://github.com/MargaritkaM/Diplom/blob/master/application.properties)
 
-> spring.credit-gate.url=http://89.223.70.43:9999/credit
->
-> spring.payment-gate.url=http://89.223.70.43:9999/payment
->
-> spring.datasource.url=jdbc:postgresql://89.223.70.43:5432/app
->
-> spring.datasource.username=user
->
-> spring.datasource.password=pass
+3. Параметры [docker-compose.yml](https://github.com/MargaritkaM/Diplom/blob/master/docker-compose.yml)
+4. Склонировать проект на удаленную машину для запуска контейнера
+ 
+ `адрес - 89.223.70.43`
+ 
+5. Поднять контейнеры postgresql, Node.js:
+ 
+ ` директория Diplom5-Diplom`
+ 
+ ` команда docker-compose up`
+ 
+6. Запустить jar файл через команду в терминале IDEA:
 
-3. В docker-compose.yml прописано:
-` version: '3.7'`
+ ` java "-Dspring.datasource.url=jdbc:postgresql://89.223.70.43:5432/app" -jar artifacts/aqa-shop.jar`
+ 
+7. Запустить тесты используя зеленый треугольник в IDEA либо через команду в терминале:
 
-`   services:`
-`    postgres:`
-`      image: postgres:12.0-alpine`
-`      restart: always`
-`      environment:`
-`       - POSTGRES_USER=user`
-`       - POSTGRES_PASSWORD=pass`
-`       - POSTGRES_DB=app`
-`      ports:`
-`       - '5432:5432'`
-`    node-app:`
-`      build: ./artifacts/gate-simulator`
-`      image: latest`
-`      container_name: node`
-`     ports:`
-`       - '9999:9999'~`
+ ` gradlew clean test -Ddb.url=jdbc:postgresql://89.223.70.43:5432/app -Dapp.url=http://localhost:8080`
+ 
+8. Остановить контейнеры через команду в терминале:
 
-
-
-3. Склонировать проект на удаленную машину для запуска контейнера
-
-> адрес - 89.223.70.43
-
-4. Поднять контейнеры postgresql, Node.js в корне проекта склонированного проекта на удаленной машине:
-
-> директория Diplom5-Diplom 
-
-> команда docker-compose up
-
-5. Запустить jar файл через команду в терминале IDEA:
-
-> java "-Dspring.datasource.url=jdbc:postgresql://89.223.70.43:5432/app" -jar artifacts/aqa-shop.jar
-
-6. Запустить тесты используя зеленый треугольник в IDEA либо через команду в терминале:
-
-> gradlew clean test -Ddb.url=jdbc:postgresql://89.223.70.43:5432/app -Dapp.url=http://localhost:8080
-
-7. Остановить контейнеры через команду в терминале:
-
->docker-compose down
+ ` docker-compose down`

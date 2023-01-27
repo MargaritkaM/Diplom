@@ -21,6 +21,8 @@
 `Неуспешные` 14 (19%)
 
 ![image](https://user-images.githubusercontent.com/106307755/214855082-41cf1844-0115-411f-b9b1-41e33abb3a84.png)
+![image](https://user-images.githubusercontent.com/106307755/215082926-7bee8c27-6706-4386-937e-e3e73709703f.png)
+
 
 ## Список зарегистрированных дефектов
 
